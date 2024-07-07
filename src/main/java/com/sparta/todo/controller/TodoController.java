@@ -24,6 +24,12 @@ public class TodoController {
             @Valid @RequestBody TodoReqDto todoReqDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         TodoResDto todoResDto = todoService.createTodo(userDetails.getUser(), todoReqDto);
         return ResponseEntity.ok().body(new CommonResDto<>(HttpStatus.OK.value(), "일정 작성에 성공하였습니다!", todoResDto));
+    }
 
+    @GetMapping("/todos/{todoId}")
+    public ResponseEntity<CommonResDto<TodoResDto>> getTodo (
+            @PathVariable(name = "todoId") long todoId) {
+        TodoResDto todoResDto = todoService.getTodo(todoId);
+        return ResponseEntity.ok().body(new CommonResDto<>(HttpStatus.OK.value(), "ID와 일치하는 일정 조회에 성공하였습니다!", todoResDto));
     }
 }

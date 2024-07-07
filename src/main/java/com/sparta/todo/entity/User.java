@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Table(name = "user")
-public class User extends Timestamped{
+public class User extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,10 +25,17 @@ public class User extends Timestamped{
     @Column(name = "auth", nullable = false)
     private Auth auth;
 
+    @Column(name = "refresh_token", nullable = false)
+    private String refreshToken = "";
+
     public User(String username, String password, Auth auth) {
         this.username = username;
         this.password = password;
         this.auth = auth;
+    }
+
+    public void updateRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 
 

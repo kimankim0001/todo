@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -27,6 +30,9 @@ public class User extends Timestamped {
 
     @Column(name = "refresh_token", nullable = false)
     private String refreshToken = "";
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private final List<Todo> todoList = new ArrayList<>();
 
     public User(String username, String password, Auth auth) {
         this.username = username;

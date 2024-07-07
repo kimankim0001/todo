@@ -52,6 +52,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/users/signup").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/todos/{todoId}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/todos").permitAll()
                         .anyRequest().authenticated()
         );
 

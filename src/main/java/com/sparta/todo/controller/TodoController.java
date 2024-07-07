@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -31,5 +33,12 @@ public class TodoController {
             @PathVariable(name = "todoId") long todoId) {
         TodoResDto todoResDto = todoService.getTodo(todoId);
         return ResponseEntity.ok().body(new CommonResDto<>(HttpStatus.OK.value(), "ID와 일치하는 일정 조회에 성공하였습니다!", todoResDto));
+    }
+
+    @GetMapping("/todos")
+    public ResponseEntity<CommonResDto<List<TodoResDto>>> findAllByTodoWithPageAndSortDesc (
+            @RequestParam("page") int page) {
+        List<TodoResDto> todoResDtos = todoService.findAllByTodoWithPageAndSortDesc(page,5);
+        return ResponseEntity.ok().body(new CommonResDto<>(HttpStatus.OK.value(), "전체 일정 조회에 성공하였습니다!", todoResDtos));
     }
 }

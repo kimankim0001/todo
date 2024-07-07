@@ -1,5 +1,6 @@
 package com.sparta.todo.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ public class TodoResDto {
 
     private LocalDateTime createdAt;
 
+    @Builder
     public TodoResDto(Long todoId, String title, String description, String username, LocalDateTime createdAt) {
         this.todoId = todoId;
         this.title = title;

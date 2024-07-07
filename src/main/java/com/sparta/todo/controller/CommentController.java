@@ -42,4 +42,10 @@ public class CommentController {
         return ResponseEntity.ok().body(new CommonResDto<>(HttpStatus.OK.value(), "댓글 수정에 성공하였습니다!", resDto));
     }
 
+    @DeleteMapping("/todos/{todoId}/comments/{commentId}")
+    public ResponseEntity<CommonResDto<Void>> deleteComment(@PathVariable(name = "todoId") long todoId, @PathVariable(name = "commentId") long commentId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        commentService.deleteComment(todoId, commentId, userDetails.getUser());
+        return ResponseEntity.ok().body(new CommonResDto<>(HttpStatus.OK.value(), "댓글 삭제에 성공하였습니다!", null));
+    }
+
 }

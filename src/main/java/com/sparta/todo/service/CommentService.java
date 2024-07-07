@@ -68,6 +68,25 @@ public class CommentService {
         return new CommentResDto(comment.getId(), comment.getContent(), comment.getUser().getUsername(), comment.getTodo().getId(), comment.getCreatedAt());
     }
 
+    @Transactional
+    public void deleteComment(long todoId, long commentId, User user) {
+
+        todoService.findTodo(todoId);
+        Comment comment = findComment(commentId);
+        String loginUsername = user.getUsername();
+        String commentUsername = comment.getUser().getUsername();
+
+        if (!loginUsername.equals(commentUsername)) {
+            throw new IllegalArgumentException(messageSource.getMessage(
+                    "author.and.user.mismatch",
+                    null,
+                    "User Mismatch",
+                    Locale.getDefault()
+            ));
+        }
+        commentRepository.delete(comment);
+    }
+
     public Comment findComment(long commentId) {
         return commentRepository.findById(commentId).orElseThrow(
                 () -> new IllegalArgumentException(messageSource.getMessage(

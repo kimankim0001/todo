@@ -67,6 +67,22 @@ public class TodoService {
         return new TodoResDto(todo.getId(), todo.getTitle(), todo.getDescription(), todo.getUser().getUsername(), todo.getCreatedAt());
     }
 
+    @Transactional
+    public void deleteTodo(long todoId, User user) {
+        Todo todo = findTodo(todoId);
+        String loginUsername = user.getUsername();
+        String todoUsername = todo.getUser().getUsername();
+        if (!loginUsername.equals(todoUsername)) {
+            throw new IllegalArgumentException(messageSource.getMessage(
+                    "author.and.user.mismatch",
+                    null,
+                    "User Mismatch",
+                    Locale.getDefault()
+            ));
+        }
+        todoRepository.delete(todo);
+    }
+
     public Todo findTodo(long todoId) {
         return todoRepository.findById(todoId).orElseThrow(
                 () -> new IllegalArgumentException(messageSource.getMessage(

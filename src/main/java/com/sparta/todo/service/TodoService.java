@@ -50,6 +50,23 @@ public class TodoService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
+    public TodoResDto updateTodo(long todoId, User user, TodoReqDto todoReqDto) {
+        Todo todo = findTodo(todoId);
+        String loginUsername = user.getUsername();
+        String todoUsername = todo.getUser().getUsername();
+        if (!loginUsername.equals(todoUsername)) {
+            throw new IllegalArgumentException(messageSource.getMessage(
+                    "author.and.user.mismatch",
+                    null,
+                    "User Mismatch",
+                    Locale.getDefault()
+            ));
+        }
+        todo.updateTodo(todoReqDto.getTitle(), todoReqDto.getDescription());
+        return new TodoResDto(todo.getId(), todo.getTitle(), todo.getDescription(), todo.getUser().getUsername(), todo.getCreatedAt());
+    }
+
     public Todo findTodo(long todoId) {
         return todoRepository.findById(todoId).orElseThrow(
                 () -> new IllegalArgumentException(messageSource.getMessage(

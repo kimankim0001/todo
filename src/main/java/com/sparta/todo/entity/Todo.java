@@ -29,4 +29,9 @@ public class Todo extends Timestamped{
         this.description = description;
         this.user = user;
     }
+
+    public void updateTodo(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
 }

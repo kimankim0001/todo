@@ -41,4 +41,11 @@ public class TodoController {
         List<TodoResDto> todoResDtos = todoService.findAllByTodoWithPageAndSortDesc(page,5);
         return ResponseEntity.ok().body(new CommonResDto<>(HttpStatus.OK.value(), "전체 일정 조회에 성공하였습니다!", todoResDtos));
     }
+
+    @PatchMapping("/todos/{todoId}")
+    public ResponseEntity<CommonResDto<TodoResDto>> updateTodo (
+            @PathVariable(name = "todoId") long todoId, @Valid @RequestBody TodoReqDto todoReqDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        TodoResDto todoResDto = todoService.updateTodo(todoId, userDetails.getUser(), todoReqDto);
+        return ResponseEntity.ok().body(new CommonResDto<>(HttpStatus.OK.value(), "선택 일정 수정에 성공하였습니다!", todoResDto));
+    }
 }

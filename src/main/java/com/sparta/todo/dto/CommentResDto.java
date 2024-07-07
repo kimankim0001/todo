@@ -1,5 +1,6 @@
 package com.sparta.todo.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ public class CommentResDto {
 
     private LocalDateTime createdAt;
 
+    @Builder
     public CommentResDto(Long commentId, String content, String username, Long todoId, LocalDateTime createdAt) {
         this.commentId = commentId;
         this.content = content;

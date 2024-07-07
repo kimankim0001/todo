@@ -53,6 +53,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/todos/{todoId}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/todos").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/todos/{todoId}/comments").permitAll()
                         .anyRequest().authenticated()
         );
 
